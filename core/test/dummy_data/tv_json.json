@@ -1,0 +1,27 @@
+{
+    "page": 1,
+    "results": [
+      {
+        "adult" : false,
+        "backdrop_path": "backdropPath",
+        "first_air_date": "firstAirDate",
+        "genre_ids": [
+          1
+        ],
+        "id": 1,
+        "name": "name",
+        "origin_country": [
+          "En"
+        ],
+        "original_language": "originalLanguage",
+        "original_name": "Dirty Linen",
+        "overview": "overview",
+        "popularity": 1,
+        "poster_path": "posterPath",
+        "vote_average": 1,
+        "vote_count": 1
+      }
+    ],
+    "total_pages": 7416,
+    "total_results": 148302
+  }

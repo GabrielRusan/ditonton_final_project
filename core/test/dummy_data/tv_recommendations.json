@@ -1,0 +1,29 @@
+{
+    "page": 1,
+    "results": [
+      {
+          "adult": false,
+          "backdrop_path": "/4NAw7IvFEOkBOPapCKsnhWmLjvk.jpg",
+          "genre_ids": [
+              18,
+              9648,
+              35
+          ],
+          "id": 236033,
+          "origin_country": [
+              "CN"
+          ],
+          "original_language": "zh",
+          "original_name": "墨雨云间",
+          "overview": "This drama tells the story of Xue Fangfei, the daughter of a well-off county magistrate who lost everything after a major upheaval. Saved by Jiang Li, the daughter of the Secretariat Director, she took on the identity of Jiang Li and returned to the capital. With the help of Duke Xiao Heng and others, she overcame numerous hardships, tirelessly fought against injustice, rescued her father who had been wrongly imprisoned, assisted Xiao Heng in upholding justice, protected the common people, and ultimately regained a beautiful life.",
+          "popularity": 2926.324,
+          "poster_path": "/2tZoc93g8DXTWbQjj328xCb9Ei7.jpg",
+          "first_air_date": "2024-06-02",
+          "name": "The Double",
+          "vote_average": 7.0,
+          "vote_count": 1
+      }
+    ],
+    "total_pages": 14,
+    "total_results": 275
+  }
