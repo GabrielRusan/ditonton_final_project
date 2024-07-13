@@ -11,9 +11,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  search:
-    path: ../search
+  feature_movie:
+    path: ../features/feature_movie
+  feature_tv:
+    path: ../features/feature_tv
   http: ^1.1.0
   provider: ^6.0.3
   dartz: ^0.10.0-nullsafety.2
@@ -30,6 +31,8 @@ dependencies:
       url: https://github.com/chornthorn/data_connection_checker.git
       ref: master
   firebase_crashlytics: ^4.0.3
+  flutter_bloc: ^8.1.6
+  rxdart: ^0.27.7
 
   
 
