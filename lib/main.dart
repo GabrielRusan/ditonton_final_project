@@ -2,17 +2,18 @@ import 'package:about/about_page.dart';
 import 'package:core/core.dart';
 import 'package:core/widgets/custom_drawer.dart';
 import 'package:ditonton_submission/firebase_options.dart';
+import 'package:feature_movie/presentations/bloc/movie_detail_bloc/movie_detail_bloc.dart';
+import 'package:feature_movie/presentations/bloc/movie_recommendation/movie_recommendation_bloc.dart';
+import 'package:feature_movie/presentations/bloc/now_playing_movie_bloc/now_playing_movie_bloc.dart';
+import 'package:feature_movie/presentations/bloc/popular_movie_bloc/popular_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/search_movies_bloc/search_movies_bloc.dart';
+import 'package:feature_movie/presentations/bloc/top_rated_movie_bloc/top_rated_movie_bloc.dart';
+import 'package:feature_movie/presentations/cubit/watchlist_movie/watchlist_movie_cubit.dart';
 import 'package:feature_movie/presentations/pages/movie_detail_page.dart';
 import 'package:feature_movie/presentations/pages/popular_movies_page.dart';
 import 'package:feature_movie/presentations/pages/search_page.dart';
 import 'package:feature_movie/presentations/pages/top_rated_movies_page.dart';
 import 'package:feature_movie/presentations/pages/watchlist_movies_page.dart';
-import 'package:feature_movie/presentations/provider/movie_detail_notifier.dart';
-import 'package:feature_movie/presentations/provider/movie_list_notifier.dart';
-import 'package:feature_movie/presentations/provider/popular_movies_notifier.dart';
-import 'package:feature_movie/presentations/provider/top_rated_movies_notifier.dart';
-import 'package:feature_movie/presentations/provider/watchlist_movie_notifier.dart';
 import 'package:feature_tv/presentation/bloc/search_tvs_bloc/search_tvs_bloc.dart';
 import 'package:feature_tv/presentation/pages/tv_pages/airing_today_tv_page.dart';
 import 'package:feature_tv/presentation/pages/tv_pages/popular_tv_page.dart';
@@ -63,21 +64,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
-        ),
-        ChangeNotifierProvider(
           create: (_) => di.locator<TvListNotifier>(),
         ),
         ChangeNotifierProvider(
@@ -95,11 +81,32 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => di.locator<TvDetailNotifier>(),
         ),
+        BlocProvider<NowPlayingMovieBloc>(
+          create: (_) => di.locator<NowPlayingMovieBloc>(),
+        ),
+        BlocProvider<TopRatedMovieBloc>(
+          create: (_) => di.locator<TopRatedMovieBloc>(),
+        ),
+        BlocProvider<PopularMovieBloc>(
+          create: (_) => di.locator<PopularMovieBloc>(),
+        ),
         BlocProvider<SearchMoviesBloc>(
           create: (_) => di.locator<SearchMoviesBloc>(),
         ),
         BlocProvider<SearchTvsBloc>(
           create: (_) => di.locator<SearchTvsBloc>(),
+        ),
+        BlocProvider<MovieDetailBloc>(
+          create: (_) => di.locator<MovieDetailBloc>(),
+        ),
+        BlocProvider<MovieRecommendationBloc>(
+          create: (_) => di.locator<MovieRecommendationBloc>(),
+        ),
+        BlocProvider<WatchlistMovieCubit>(
+          create: (_) => di.locator<WatchlistMovieCubit>(),
+        ),
+        BlocProvider<WatchlistMovieStatusCubit>(
+          create: (_) => di.locator<WatchlistMovieStatusCubit>(),
         ),
       ],
       child: MaterialApp(

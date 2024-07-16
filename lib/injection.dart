@@ -3,12 +3,13 @@ import 'package:core/helper/db/database_helper.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:feature_movie/domain/repositories/movie_repository.dart';
 import 'package:feature_movie/domain/usecases/search_movies.dart';
+import 'package:feature_movie/presentations/bloc/movie_detail_bloc/movie_detail_bloc.dart';
+import 'package:feature_movie/presentations/bloc/movie_recommendation/movie_recommendation_bloc.dart';
+import 'package:feature_movie/presentations/bloc/now_playing_movie_bloc/now_playing_movie_bloc.dart';
+import 'package:feature_movie/presentations/bloc/popular_movie_bloc/popular_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/search_movies_bloc/search_movies_bloc.dart';
-import 'package:feature_movie/presentations/provider/movie_detail_notifier.dart';
-import 'package:feature_movie/presentations/provider/movie_list_notifier.dart';
-import 'package:feature_movie/presentations/provider/popular_movies_notifier.dart';
-import 'package:feature_movie/presentations/provider/top_rated_movies_notifier.dart';
-import 'package:feature_movie/presentations/provider/watchlist_movie_notifier.dart';
+import 'package:feature_movie/presentations/bloc/top_rated_movie_bloc/top_rated_movie_bloc.dart';
+import 'package:feature_movie/presentations/cubit/watchlist_movie/watchlist_movie_cubit.dart';
 import 'package:feature_movie/data/datasources/movie_local_data_source.dart';
 import 'package:feature_movie/data/datasources/movie_remote_data_source.dart';
 import 'package:feature_movie/data/repositories/movie_repository_impl.dart';
@@ -49,39 +50,6 @@ import 'package:get_it/get_it.dart';
 final locator = GetIt.instance;
 
 void init() {
-  // provider
-  locator.registerFactory(
-    () => MovieListNotifier(
-      getNowPlayingMovies: locator(),
-      getPopularMovies: locator(),
-      getTopRatedMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieDetailNotifier(
-      getMovieDetail: locator(),
-      getMovieRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => PopularMoviesNotifier(
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TopRatedMoviesNotifier(
-      getTopRatedMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => WatchlistMovieNotifier(
-      getWatchlistMovies: locator(),
-    ),
-  );
-
   locator.registerFactory(
     () => TvListNotifier(
       getAiringTodayTv: locator(),
@@ -124,11 +92,39 @@ void init() {
   );
 
   locator.registerFactory(
+    () => NowPlayingMovieBloc(locator()),
+  );
+
+  locator.registerFactory(
+    () => PopularMovieBloc(locator()),
+  );
+
+  locator.registerFactory(
+    () => TopRatedMovieBloc(locator()),
+  );
+
+  locator.registerFactory(
     () => SearchMoviesBloc(locator()),
   );
 
   locator.registerFactory(
     () => SearchTvsBloc(locator()),
+  );
+
+  locator.registerFactory(
+    () => MovieDetailBloc(locator()),
+  );
+
+  locator.registerFactory(
+    () => MovieRecommendationBloc(locator()),
+  );
+
+  locator.registerFactory(
+    () => WatchlistMovieCubit(locator()),
+  );
+
+  locator.registerFactory(
+    () => WatchlistMovieStatusCubit(locator(), locator(), locator()),
   );
 
   // use case

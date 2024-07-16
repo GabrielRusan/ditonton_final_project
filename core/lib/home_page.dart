@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:feature_movie/domain/entities/movie.dart';
+import 'package:feature_movie/presentations/bloc/now_playing_movie_bloc/now_playing_movie_bloc.dart';
+import 'package:feature_movie/presentations/bloc/popular_movie_bloc/popular_movie_bloc.dart';
+import 'package:feature_movie/presentations/bloc/top_rated_movie_bloc/top_rated_movie_bloc.dart';
 import 'package:feature_movie/presentations/pages/movie_detail_page.dart';
 import 'package:feature_movie/presentations/pages/popular_movies_page.dart';
 import 'package:feature_movie/presentations/pages/search_page.dart';
 import 'package:feature_movie/presentations/pages/top_rated_movies_page.dart';
-import 'package:feature_movie/presentations/provider/movie_list_notifier.dart';
 import 'package:feature_tv/domain/entities/tv.dart';
 import 'package:feature_tv/presentation/pages/tv_pages/airing_today_tv_page.dart';
 import 'package:feature_tv/presentation/pages/tv_pages/popular_tv_page.dart';
@@ -15,6 +17,7 @@ import 'package:feature_tv/presentation/pages/tv_pages/tv_detail_page.dart';
 import 'package:feature_tv/presentation/provider/tv_list_notifier.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,10 +32,11 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+        () => context.read<NowPlayingMovieBloc>().add(FetchNowPlayingMovie()));
+    Future.microtask(
+        () => context.read<PopularMovieBloc>().add(FetchPopularMovie()));
+    Future.microtask(
+        () => context.read<TopRatedMovieBloc>().add(FetchTopRatedMovieEvent()));
 
     Future.microtask(() => Provider.of<TvListNotifier>(context, listen: false)
       ..fetchAiringTodayTv()
@@ -85,15 +89,14 @@ class _HomePageState extends State<HomePage> {
                       'Now Playing',
                       style: kHeading6,
                     ),
-                    Consumer<MovieListNotifier>(
-                        builder: (context, data, child) {
-                      final state = data.nowPlayingState;
-                      if (state == RequestState.Loading) {
+                    BlocBuilder<NowPlayingMovieBloc, NowPlayingMovieState>(
+                        builder: (context, state) {
+                      if (state is NowPlayingMovieLoading) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state == RequestState.Loaded) {
-                        return MovieList(data.nowPlayingMovies);
+                      } else if (state is NowPlayingMovieHasData) {
+                        return MovieList(state.result);
                       } else {
                         return const Text('Failed');
                       }
@@ -103,15 +106,14 @@ class _HomePageState extends State<HomePage> {
                       onTap: () => Navigator.pushNamed(
                           context, PopularMoviesPage.ROUTE_NAME),
                     ),
-                    Consumer<MovieListNotifier>(
-                        builder: (context, data, child) {
-                      final state = data.popularMoviesState;
-                      if (state == RequestState.Loading) {
+                    BlocBuilder<PopularMovieBloc, PopularMovieState>(
+                        builder: (context, state) {
+                      if (state is PopularMovieLoading) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state == RequestState.Loaded) {
-                        return MovieList(data.popularMovies);
+                      } else if (state is PopularMovieHasData) {
+                        return MovieList(state.result);
                       } else {
                         return const Text('Failed');
                       }
@@ -121,15 +123,14 @@ class _HomePageState extends State<HomePage> {
                       onTap: () => Navigator.pushNamed(
                           context, TopRatedMoviesPage.ROUTE_NAME),
                     ),
-                    Consumer<MovieListNotifier>(
-                        builder: (context, data, child) {
-                      final state = data.topRatedMoviesState;
-                      if (state == RequestState.Loading) {
+                    BlocBuilder<TopRatedMovieBloc, TopRatedMovieState>(
+                        builder: (context, state) {
+                      if (state is TopRatedMovieLoading) {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state == RequestState.Loaded) {
-                        return MovieList(data.topRatedMovies);
+                      } else if (state is TopRatedMovieHasData) {
+                        return MovieList(state.result);
                       } else {
                         return const Text('Failed');
                       }

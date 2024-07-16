@@ -2,15 +2,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:feature_movie/domain/entities/movie.dart';
-import 'package:feature_movie/domain/usecases/search_movies.dart';
 import 'package:feature_movie/presentations/bloc/search_movies_bloc/search_movies_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'search_movies_bloc_test.mocks.dart';
+import '../../helpers/test_usecase_helper.mocks.dart';
 
-@GenerateMocks([SearchMovies])
 void main() {
   late SearchMoviesBloc searchMoviesBloc;
   late MockSearchMovies mockSearchMovies;
