@@ -9,7 +9,7 @@ part 'search_movies_state.dart';
 
 class SearchMoviesBloc extends Bloc<SearchMoviesEvent, SearchMoviesState> {
   final SearchMovies searchMovies;
-  SearchMoviesBloc(this.searchMovies) : super(SearchMoviesEmpty()) {
+  SearchMoviesBloc(this.searchMovies) : super(SearchMoviesInitial()) {
     on<OnQueryChanged>((event, emit) async {
       final query = event.query;
 

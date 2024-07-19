@@ -37,7 +37,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Watchlist'),
+        title: const Text('Watchlist Movie'),
       ),
       body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -54,6 +54,10 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                   return MovieCard(movie);
                 },
                 itemCount: state.result.length,
+              );
+            } else if (state is WatchlistMovieEmpty) {
+              return const Center(
+                child: Text('There Is No Watchlist Here Yet!'),
               );
             } else {
               return const Center(

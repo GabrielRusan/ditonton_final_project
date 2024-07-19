@@ -7,6 +7,8 @@ sealed class SearchTvsState extends Equatable {
   List<Object> get props => [];
 }
 
+final class SearchTvsInitial extends SearchTvsState {}
+
 final class SearchTvsEmpty extends SearchTvsState {}
 
 final class SearchTvsLoading extends SearchTvsState {}

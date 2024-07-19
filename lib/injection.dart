@@ -37,59 +37,26 @@ import 'package:feature_tv/domain/usecases/remove_watchlist_tv.dart';
 import 'package:feature_movie/domain/usecases/save_watchlist.dart';
 import 'package:feature_tv/domain/usecases/save_watchlist_tv.dart';
 import 'package:feature_tv/domain/usecases/search_tvs.dart';
+import 'package:feature_tv/presentation/bloc/airing_today_tv_bloc/airing_today_tv_bloc.dart';
+import 'package:feature_tv/presentation/bloc/popular_tv_bloc/popular_tv_bloc.dart';
+import 'package:feature_tv/presentation/bloc/recommendation_tv_bloc/recommendation_tv_bloc.dart';
 import 'package:feature_tv/presentation/bloc/search_tvs_bloc/search_tvs_bloc.dart';
-import 'package:feature_tv/presentation/provider/airing_today_tv_notifier.dart';
-import 'package:feature_tv/presentation/provider/popular_tv_notifier.dart';
-import 'package:feature_tv/presentation/provider/top_rated_tv_notifier.dart';
-import 'package:feature_tv/presentation/provider/tv_detail_notifier.dart';
-import 'package:feature_tv/presentation/provider/tv_list_notifier.dart';
-import 'package:feature_tv/presentation/provider/watchlist_tv_notifier.dart';
+import 'package:feature_tv/presentation/bloc/season_detail_bloc/season_detail_bloc.dart';
+import 'package:feature_tv/presentation/bloc/top_rated_tv_bloc/top_rated_tv_bloc.dart';
+import 'package:feature_tv/presentation/bloc/tv_detail_bloc/tv_detail_bloc.dart';
+import 'package:feature_tv/presentation/bloc/tv_watchlist_status_bloc/tv_watchlist_status_bloc.dart';
+import 'package:feature_tv/presentation/bloc/watchlist_tv_bloc/watchlist_tv_bloc.dart';
+import 'dart:io';
+
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:get_it/get_it.dart';
 
 final locator = GetIt.instance;
 
-void init() {
-  locator.registerFactory(
-    () => TvListNotifier(
-      getAiringTodayTv: locator(),
-      getPopularTv: locator(),
-      getTopRatedTv: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => TvDetailNotifier(
-      getTvDetail: locator(),
-      getTvRecommendations: locator(),
-      getTvWatchlistStatus: locator(),
-      saveWatchlistTv: locator(),
-      removeWatchlistTv: locator(),
-      getSeasonDetail: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => PopularTvNotifier(
-      locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => TopRatedTvNotifier(
-      getPopularTv: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => WatchlistTvNotifier(
-      getWatchlistTvs: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => AiringTodayTvNotifier(locator()),
-  );
+Future<void> init() async {
+  final myHttpClient = await getSSLPinningClient();
 
   locator.registerFactory(
     () => NowPlayingMovieBloc(locator()),
@@ -125,6 +92,31 @@ void init() {
 
   locator.registerFactory(
     () => WatchlistMovieStatusCubit(locator(), locator(), locator()),
+  );
+
+  locator.registerFactory(
+    () => AiringTodayTvBloc(locator()),
+  );
+  locator.registerFactory(
+    () => PopularTvBloc(locator()),
+  );
+  locator.registerFactory(
+    () => TopRatedTvBloc(locator()),
+  );
+  locator.registerFactory(
+    () => RecommendationTvBloc(locator()),
+  );
+  locator.registerFactory(
+    () => WatchlistTvBloc(locator()),
+  );
+  locator.registerFactory(
+    () => TvWatchlistStatusBloc(locator(), locator(), locator()),
+  );
+  locator.registerFactory(
+    () => SeasonDetailBloc(locator()),
+  );
+  locator.registerFactory(
+    () => TvDetailBloc(locator(), locator(), locator()),
   );
 
   // use case
@@ -186,6 +178,22 @@ void init() {
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
 
   // external
-  locator.registerLazySingleton(() => http.Client());
+
+  locator.registerLazySingleton<http.Client>(() => myHttpClient);
   locator.registerLazySingleton(() => DataConnectionChecker());
+}
+
+Future<SecurityContext> get globalContext async {
+  final sslCert = await rootBundle.load('assets/certificate.pem');
+  SecurityContext securityContext = SecurityContext(withTrustedRoots: false);
+  securityContext.setTrustedCertificatesBytes(sslCert.buffer.asInt8List());
+  return securityContext;
+}
+
+Future<http.Client> getSSLPinningClient() async {
+  HttpClient client = HttpClient(context: await globalContext);
+  client.badCertificateCallback =
+      (X509Certificate cert, String host, int port) => false;
+  IOClient ioClient = IOClient(client);
+  return ioClient;
 }

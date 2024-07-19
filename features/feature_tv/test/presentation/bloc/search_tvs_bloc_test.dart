@@ -2,15 +2,12 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:feature_tv/domain/entities/tv.dart';
-import 'package:feature_tv/domain/usecases/search_tvs.dart';
 import 'package:feature_tv/presentation/bloc/search_tvs_bloc/search_tvs_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'search_tvs_bloc_test.mocks.dart';
+import '../../helpers/test_usecase_helper.mocks.dart';
 
-@GenerateMocks([SearchTvs])
 void main() {
   late SearchTvsBloc searchTvsBloc;
   late MockSearchTvs mockSearchTvs;
@@ -38,8 +35,8 @@ void main() {
   final tTvList = <Tv>[tTvModel];
   const tQuery = 'spiderman';
 
-  test('Initial state should be SearchTvsEmpty', () {
-    expect(searchTvsBloc.state, SearchTvsEmpty());
+  test('Initial state should be SearchTvsInitial', () {
+    expect(searchTvsBloc.state, SearchTvsInitial());
   });
 
   blocTest<SearchTvsBloc, SearchTvsState>(

@@ -35,8 +35,8 @@ void main() {
   final tMovieList = <Movie>[tMovieModel];
   const tQuery = 'spiderman';
 
-  test('Initial state should be SearchMoviesEmpty', () {
-    expect(searchMoviesBloc.state, SearchMoviesEmpty());
+  test('Initial state should be SearchMoviesInitial', () {
+    expect(searchMoviesBloc.state, SearchMoviesInitial());
   });
 
   blocTest<SearchMoviesBloc, SearchMoviesState>(

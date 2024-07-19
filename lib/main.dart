@@ -14,19 +14,21 @@ import 'package:feature_movie/presentations/pages/popular_movies_page.dart';
 import 'package:feature_movie/presentations/pages/search_page.dart';
 import 'package:feature_movie/presentations/pages/top_rated_movies_page.dart';
 import 'package:feature_movie/presentations/pages/watchlist_movies_page.dart';
+import 'package:feature_tv/presentation/bloc/airing_today_tv_bloc/airing_today_tv_bloc.dart';
+import 'package:feature_tv/presentation/bloc/popular_tv_bloc/popular_tv_bloc.dart';
+import 'package:feature_tv/presentation/bloc/recommendation_tv_bloc/recommendation_tv_bloc.dart';
 import 'package:feature_tv/presentation/bloc/search_tvs_bloc/search_tvs_bloc.dart';
-import 'package:feature_tv/presentation/pages/tv_pages/airing_today_tv_page.dart';
-import 'package:feature_tv/presentation/pages/tv_pages/popular_tv_page.dart';
-import 'package:feature_tv/presentation/pages/tv_pages/search_tv_page.dart';
-import 'package:feature_tv/presentation/pages/tv_pages/top_rated_tv_page.dart';
-import 'package:feature_tv/presentation/pages/tv_pages/tv_detail_page.dart';
-import 'package:feature_tv/presentation/pages/tv_pages/watchlist_tv_page.dart';
-import 'package:feature_tv/presentation/provider/airing_today_tv_notifier.dart';
-import 'package:feature_tv/presentation/provider/popular_tv_notifier.dart';
-import 'package:feature_tv/presentation/provider/top_rated_tv_notifier.dart';
-import 'package:feature_tv/presentation/provider/tv_detail_notifier.dart';
-import 'package:feature_tv/presentation/provider/tv_list_notifier.dart';
-import 'package:feature_tv/presentation/provider/watchlist_tv_notifier.dart';
+import 'package:feature_tv/presentation/bloc/season_detail_bloc/season_detail_bloc.dart';
+import 'package:feature_tv/presentation/bloc/top_rated_tv_bloc/top_rated_tv_bloc.dart';
+import 'package:feature_tv/presentation/bloc/tv_detail_bloc/tv_detail_bloc.dart';
+import 'package:feature_tv/presentation/bloc/tv_watchlist_status_bloc/tv_watchlist_status_bloc.dart';
+import 'package:feature_tv/presentation/bloc/watchlist_tv_bloc/watchlist_tv_bloc.dart';
+import 'package:feature_tv/presentation/pages/airing_today_tv_page.dart';
+import 'package:feature_tv/presentation/pages/popular_tv_page.dart';
+import 'package:feature_tv/presentation/pages/search_tv_page.dart';
+import 'package:feature_tv/presentation/pages/top_rated_tv_page.dart';
+import 'package:feature_tv/presentation/pages/tv_detail_page.dart';
+import 'package:feature_tv/presentation/pages/watchlist_tv_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -52,7 +54,7 @@ void main() async {
     return true;
   };
 
-  di.init();
+  await di.init();
   runApp(const MyApp());
 }
 
@@ -63,24 +65,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<AiringTodayTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvDetailNotifier>(),
-        ),
         BlocProvider<NowPlayingMovieBloc>(
           create: (_) => di.locator<NowPlayingMovieBloc>(),
         ),
@@ -107,6 +91,30 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<WatchlistMovieStatusCubit>(
           create: (_) => di.locator<WatchlistMovieStatusCubit>(),
+        ),
+        BlocProvider<AiringTodayTvBloc>(
+          create: (_) => di.locator<AiringTodayTvBloc>(),
+        ),
+        BlocProvider<PopularTvBloc>(
+          create: (_) => di.locator<PopularTvBloc>(),
+        ),
+        BlocProvider<TopRatedTvBloc>(
+          create: (_) => di.locator<TopRatedTvBloc>(),
+        ),
+        BlocProvider<TvDetailBloc>(
+          create: (_) => di.locator<TvDetailBloc>(),
+        ),
+        BlocProvider<SeasonDetailBloc>(
+          create: (_) => di.locator<SeasonDetailBloc>(),
+        ),
+        BlocProvider<TvWatchlistStatusBloc>(
+          create: (_) => di.locator<TvWatchlistStatusBloc>(),
+        ),
+        BlocProvider<WatchlistTvBloc>(
+          create: (_) => di.locator<WatchlistTvBloc>(),
+        ),
+        BlocProvider<RecommendationTvBloc>(
+          create: (_) => di.locator<RecommendationTvBloc>(),
         ),
       ],
       child: MaterialApp(

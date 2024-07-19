@@ -1,7 +1,7 @@
 // ignore_for_file: use_super_parameters
 
 import 'package:feature_movie/presentations/pages/watchlist_movies_page.dart';
-import 'package:feature_tv/presentation/pages/tv_pages/watchlist_tv_page.dart';
+import 'package:feature_tv/presentation/pages/watchlist_tv_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatefulWidget {

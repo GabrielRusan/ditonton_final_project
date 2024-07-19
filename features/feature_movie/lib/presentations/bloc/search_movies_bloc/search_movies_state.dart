@@ -7,6 +7,8 @@ sealed class SearchMoviesState extends Equatable {
   List<Object> get props => [];
 }
 
+final class SearchMoviesInitial extends SearchMoviesState {}
+
 final class SearchMoviesEmpty extends SearchMoviesState {}
 
 final class SearchMoviesLoading extends SearchMoviesState {}
