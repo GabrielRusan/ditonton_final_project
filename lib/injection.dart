@@ -4,6 +4,7 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:feature_movie/domain/repositories/movie_repository.dart';
 import 'package:feature_movie/domain/usecases/search_movies.dart';
 import 'package:feature_movie/presentations/bloc/movie_detail_bloc/movie_detail_bloc.dart';
+import 'package:feature_movie/presentations/bloc/movie_watchlist_status_bloc/movie_watchlist_status_bloc.dart';
 import 'package:feature_movie/presentations/bloc/now_playing_movie_bloc/now_playing_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/popular_movie_bloc/popular_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/search_movies_bloc/search_movies_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:feature_movie/presentations/bloc/top_rated_movie_bloc/top_rated_
 import 'package:feature_movie/data/datasources/movie_local_data_source.dart';
 import 'package:feature_movie/data/datasources/movie_remote_data_source.dart';
 import 'package:feature_movie/data/repositories/movie_repository_impl.dart';
+import 'package:feature_movie/presentations/bloc/watchlist_movie_bloc/watchlist_movie_bloc.dart';
 import 'package:feature_tv/data/datasources/tv_local_data_source.dart';
 import 'package:feature_tv/data/datasources/tv_remote_data_source.dart';
 import 'package:feature_tv/data/repositories/tv_repository_impl.dart';
@@ -80,7 +82,9 @@ Future<void> init() async {
     () => MovieDetailBloc(locator(), locator()),
   );
 
-
+  locator.registerFactory(
+    () => MovieWatchlistStatusBloc(locator(), locator(), locator()),
+  );
 
   locator.registerFactory(
     () => AiringTodayTvBloc(locator()),
@@ -105,6 +109,10 @@ Future<void> init() async {
   );
   locator.registerFactory(
     () => TvDetailBloc(locator(), locator(), locator()),
+  );
+
+  locator.registerFactory(
+    () => WatchlistMovieBloc(locator()),
   );
 
   // use case

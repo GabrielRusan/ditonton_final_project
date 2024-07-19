@@ -3,10 +3,12 @@ import 'package:core/core.dart';
 import 'package:core/widgets/custom_drawer.dart';
 import 'package:ditonton_submission/firebase_options.dart';
 import 'package:feature_movie/presentations/bloc/movie_detail_bloc/movie_detail_bloc.dart';
+import 'package:feature_movie/presentations/bloc/movie_watchlist_status_bloc/movie_watchlist_status_bloc.dart';
 import 'package:feature_movie/presentations/bloc/now_playing_movie_bloc/now_playing_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/popular_movie_bloc/popular_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/search_movies_bloc/search_movies_bloc.dart';
 import 'package:feature_movie/presentations/bloc/top_rated_movie_bloc/top_rated_movie_bloc.dart';
+import 'package:feature_movie/presentations/bloc/watchlist_movie_bloc/watchlist_movie_bloc.dart';
 import 'package:feature_movie/presentations/pages/movie_detail_page.dart';
 import 'package:feature_movie/presentations/pages/popular_movies_page.dart';
 import 'package:feature_movie/presentations/pages/search_page.dart';
@@ -104,6 +106,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RecommendationTvBloc>(
           create: (_) => di.locator<RecommendationTvBloc>(),
+        ),
+        BlocProvider<MovieWatchlistStatusBloc>(
+          create: (_) => di.locator<MovieWatchlistStatusBloc>(),
+        ),
+        BlocProvider<WatchlistMovieBloc>(
+          create: (_) => di.locator<WatchlistMovieBloc>(),
         ),
       ],
       child: MaterialApp(
