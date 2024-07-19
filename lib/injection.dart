@@ -4,12 +4,10 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:feature_movie/domain/repositories/movie_repository.dart';
 import 'package:feature_movie/domain/usecases/search_movies.dart';
 import 'package:feature_movie/presentations/bloc/movie_detail_bloc/movie_detail_bloc.dart';
-import 'package:feature_movie/presentations/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'package:feature_movie/presentations/bloc/now_playing_movie_bloc/now_playing_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/popular_movie_bloc/popular_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/search_movies_bloc/search_movies_bloc.dart';
 import 'package:feature_movie/presentations/bloc/top_rated_movie_bloc/top_rated_movie_bloc.dart';
-import 'package:feature_movie/presentations/cubit/watchlist_movie/watchlist_movie_cubit.dart';
 import 'package:feature_movie/data/datasources/movie_local_data_source.dart';
 import 'package:feature_movie/data/datasources/movie_remote_data_source.dart';
 import 'package:feature_movie/data/repositories/movie_repository_impl.dart';
@@ -79,20 +77,10 @@ Future<void> init() async {
   );
 
   locator.registerFactory(
-    () => MovieDetailBloc(locator()),
+    () => MovieDetailBloc(locator(), locator()),
   );
 
-  locator.registerFactory(
-    () => MovieRecommendationBloc(locator()),
-  );
 
-  locator.registerFactory(
-    () => WatchlistMovieCubit(locator()),
-  );
-
-  locator.registerFactory(
-    () => WatchlistMovieStatusCubit(locator(), locator(), locator()),
-  );
 
   locator.registerFactory(
     () => AiringTodayTvBloc(locator()),

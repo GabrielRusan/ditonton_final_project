@@ -3,12 +3,10 @@ import 'package:core/core.dart';
 import 'package:core/widgets/custom_drawer.dart';
 import 'package:ditonton_submission/firebase_options.dart';
 import 'package:feature_movie/presentations/bloc/movie_detail_bloc/movie_detail_bloc.dart';
-import 'package:feature_movie/presentations/bloc/movie_recommendation/movie_recommendation_bloc.dart';
 import 'package:feature_movie/presentations/bloc/now_playing_movie_bloc/now_playing_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/popular_movie_bloc/popular_movie_bloc.dart';
 import 'package:feature_movie/presentations/bloc/search_movies_bloc/search_movies_bloc.dart';
 import 'package:feature_movie/presentations/bloc/top_rated_movie_bloc/top_rated_movie_bloc.dart';
-import 'package:feature_movie/presentations/cubit/watchlist_movie/watchlist_movie_cubit.dart';
 import 'package:feature_movie/presentations/pages/movie_detail_page.dart';
 import 'package:feature_movie/presentations/pages/popular_movies_page.dart';
 import 'package:feature_movie/presentations/pages/search_page.dart';
@@ -82,15 +80,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MovieDetailBloc>(
           create: (_) => di.locator<MovieDetailBloc>(),
-        ),
-        BlocProvider<MovieRecommendationBloc>(
-          create: (_) => di.locator<MovieRecommendationBloc>(),
-        ),
-        BlocProvider<WatchlistMovieCubit>(
-          create: (_) => di.locator<WatchlistMovieCubit>(),
-        ),
-        BlocProvider<WatchlistMovieStatusCubit>(
-          create: (_) => di.locator<WatchlistMovieStatusCubit>(),
         ),
         BlocProvider<AiringTodayTvBloc>(
           create: (_) => di.locator<AiringTodayTvBloc>(),

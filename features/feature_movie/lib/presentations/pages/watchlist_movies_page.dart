@@ -1,5 +1,5 @@
 import 'package:core/utils/utils.dart';
-import 'package:feature_movie/presentations/cubit/watchlist_movie/watchlist_movie_cubit.dart';
+import 'package:feature_movie/presentations/bloc/watchlist_movie_bloc/watchlist_movie_bloc.dart';
 import 'package:feature_movie/presentations/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +18,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => context.read<WatchlistMovieCubit>().fetchWatchlistMovie());
+
+    () => context.read<WatchlistMovieBloc>().add(FetchWatchlistMovie());
   }
 
   @override
@@ -30,7 +30,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
 
   @override
   void didPopNext() {
-    context.read<WatchlistMovieCubit>().fetchWatchlistMovie();
+    context.read<WatchlistMovieBloc>().add(FetchWatchlistMovie());
   }
 
   @override
@@ -41,7 +41,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
       ),
       body: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: BlocBuilder<WatchlistMovieCubit, WatchlistMovieState>(
+          child: BlocBuilder<WatchlistMovieBloc, WatchlistMovieState>(
               builder: (context, state) {
             if (state is WatchlistMovieLoading) {
               return const Center(

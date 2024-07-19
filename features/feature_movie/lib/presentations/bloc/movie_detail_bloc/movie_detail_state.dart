@@ -12,10 +12,14 @@ final class MovieDetailLoading extends MovieDetailState {}
 final class MovieDetailError extends MovieDetailState {}
 
 final class MovieDetailLoaded extends MovieDetailState {
-  final MovieDetail result;
+  final MovieDetail movieDetail;
+  final List<Movie> recommendationList;
 
-  const MovieDetailLoaded({required this.result});
+  const MovieDetailLoaded({
+    required this.movieDetail,
+    required this.recommendationList,
+  });
 
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [movieDetail, recommendationList];
 }

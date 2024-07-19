@@ -11,10 +11,13 @@ import '../../helpers/test_usecase_helper.mocks.dart';
 void main() {
   late MovieDetailBloc movieDetailBloc;
   late MockGetMovieDetail mockGetMovieDetail;
+  late MockGetMovieRecommendations mockGetMovieRecommendations;
 
   setUp(() {
     mockGetMovieDetail = MockGetMovieDetail();
-    movieDetailBloc = MovieDetailBloc(mockGetMovieDetail);
+    mockGetMovieRecommendations = MockGetMovieRecommendations();
+    movieDetailBloc =
+        MovieDetailBloc(mockGetMovieDetail, mockGetMovieRecommendations);
   });
 
   const int tId = 1;
@@ -43,18 +46,24 @@ void main() {
     build: () {
       when(mockGetMovieDetail.execute(tId))
           .thenAnswer((_) async => const Right(tMovieDetail));
+      when(mockGetMovieRecommendations.execute(tId))
+          .thenAnswer((_) async => const Right([]));
       return movieDetailBloc;
     },
     act: (bloc) => bloc.add(const FetchMovieDetail(id: tId)),
-    expect: () =>
-        [MovieDetailLoading(), const MovieDetailLoaded(result: tMovieDetail)],
+    expect: () => [
+      MovieDetailLoading(),
+      const MovieDetailLoaded(movieDetail: tMovieDetail, recommendationList: [])
+    ],
   );
 
   blocTest<MovieDetailBloc, MovieDetailState>(
-    'Should emit [Loading, Error] when data is gotten successfuly',
+    'Should emit [Loading, Error] when data is gotten unsuccessfuly',
     build: () {
       when(mockGetMovieDetail.execute(tId))
           .thenAnswer((_) async => const Left(ServerFailure('Error')));
+      when(mockGetMovieRecommendations.execute(tId))
+          .thenAnswer((_) async => const Right([]));
       return movieDetailBloc;
     },
     act: (bloc) => bloc.add(const FetchMovieDetail(id: tId)),

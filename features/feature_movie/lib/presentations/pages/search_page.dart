@@ -59,12 +59,16 @@ class SearchPage extends StatelessWidget {
                 } else if (state is SearchMoviesEmpty) {
                   return const Expanded(
                     child: Center(
-                      child: Text('No Movie Found!'),
+                      child: Text(
+                        'No Movie Found!',
+                        key: Key('empty'),
+                      ),
                     ),
                   );
                 } else {
-                  return Expanded(
-                    child: Container(),
+                  return const Expanded(
+                    key: Key('initial'),
+                    child: SizedBox(),
                   );
                 }
               },
