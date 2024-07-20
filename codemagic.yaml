@@ -4,9 +4,19 @@ workflows:
        scripts:
          - name: Get Dependencies
            script: |
+             set -e  # Exit immediately if a command exits with a non-zero status
+             echo "Current directory: $(pwd)"
+             echo "Contents of current directory:"
+             ls -la
+             echo "Flutter version:"
+             flutter --version
+             echo "Getting dependencies for main project..."
              flutter pub get
+             echo "Getting dependencies for feature_movie..."
              cd features/feature_movie && flutter pub get
+             echo "Getting dependencies for feature_tv..."
              cd ../feature_tv && flutter pub get
+             echo "All dependencies retrieved successfully."
          - name: Run Tests
            script: |
              cd features/feature_movie && flutter test
