@@ -64,12 +64,14 @@ dependencies:
   firebase_core: ^3.2.0
   firebase_crashlytics: ^4.0.3
   firebase_analytics: ^11.2.0
-  bloc_test: ^9.1.7
-  mocktail: ^1.0.4
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  bloc_test: ^9.1.7
+  mocktail: ^1.0.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
