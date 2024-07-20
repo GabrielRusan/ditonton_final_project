@@ -1,0 +1,13 @@
+workflows:
+     flutter-workflow:
+       name: Flutter Workflow
+       scripts:
+         - name: Get Dependencies
+           script: |
+             flutter pub get
+             cd features/feature_movie && flutter pub get
+             cd ../feature_tv && flutter pub get
+         - name: Run Tests
+           script: |
+             cd features/feature_movie && flutter test
+             cd ../feature_tv && flutter test
